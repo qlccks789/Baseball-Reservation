@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mlec.dao.GameScheduleMapper">	
+	<resultMap id="gameScheduleMap" type="gameSchedule">
+		<result column="game_no" property="gameNo"/>
+		<result column="away_team_no" property="awayTeamNo"/>
+		<result column="awayteam" property="awayTeam"/>
+		<result column="game_date" property="gameDate"/>
+		<result column="seat_no" property="seatNo"/>
+	</resultMap>
+	
+	<select id="selectGameSchedule" resultMap="gameScheduleMap">
+		select game_no,
+		       game_date, 
+			   h.team_name as homeTeam,
+			   a.team_name as awayTeam
+		  from tb_game_schedule gs
+		 inner join tb_home_team h
+	     	on gs.home_team_no = h.home_team_no
+		 inner join tb_away_team a
+		    on gs.away_team_no = a.away_team_no
+	</select>
+
+</mapper>	

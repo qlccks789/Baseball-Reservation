@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mlec.dao.LevelOfSeatMapper">	
+	<resultMap id="levelOfSeatMap" type="levelOfSeat">
+		<result column="seat_no" property="seatNo"/>
+		<result column="seat_level" property="seatLevel"/>
+		<result column="price" property="price"/>
+		<result column="game_date" property="gameDate"/>
+		<result column="game_no" property="gameNo"/>
+		<result column="is_res" property="isRes"/>
+	</resultMap>
+	
+	<select id="selectSeat" resultMap="levelOfSeatMap">
+		select seat_no
+		  from tb_level_of_seat
+		 where game_no = 1
+	</select>
+	
+	<select id="selectIsReByNo" parameterType = "levelOfSeat" resultType="int">
+		select is_res
+		  from tb_level_of_seat
+		 where game_no = #{gameNo} and seat_no = #{seatNo}
+	</select>
+	
+	
+	<!-- '일반석' 하나 -->
+	<select id="selectSeatInfo" resultType="String">
+		select seat_level
+		  from tb_level_of_seat
+		 group by seat_level	
+	</select>
+
+	<!-- '가격' 하나 -->
+	<select id="selectPriceInfo" resultType="int">
+		select price
+		  from tb_level_of_seat
+		 group by price	
+	</select>
+	
+	<!-- isRes를 2로 바꾸기 (예약완료) -->
+	<update id="updateIsRes" parameterType="levelOfSeat">
+		update tb_level_of_seat
+		   set is_res = '2'
+		 where game_no = #{gameNo} 
+		   and seat_no = #{seatNo}
+	</update>
+		
+</mapper>	

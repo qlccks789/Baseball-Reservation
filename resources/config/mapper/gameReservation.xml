@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mlec.dao.GameReservationMapper">	
+	<resultMap id="gameReservationMap" type="gameReservation">
+		<result column="reservation_no" property="reservationNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="ticket_number" property="ticketNumber"/>
+		<result column="game_date" property="gameDate"/>
+		<result column="seat_no" property="seatNo"/>
+		<result column="game_no" property="gameNo"/>
+	</resultMap>
+	
+	   <!-- 결제시 DB에 저장 -->
+	
+<!--    <insert id="insertGameResevationInfo" parameterType="gameReservation"> -->
+<!-- 		insert into tb_game_reservation( -->
+<!-- 			reservation_no,  -->
+<!-- 			member_id,  -->
+<!-- 			seat_reser_no, -->
+<!-- 			game_no,  -->
+<!-- 			seat_no -->
+<!-- 		) values( -->
+<!-- 			s_reservation_no.nextval,  -->
+<!-- 			#{memberId}, -->
+<!-- 			#{seatReserNo}, -->
+<!-- 			#{gameNo}, -->
+<!-- 			#{seatNo} -->
+<!-- 		); -->
+<!--    </insert> -->
+	
+	<insert id="insertReservation" parameterType="gameReservation">
+		insert into tb_game_reservation(
+			member_id,
+			ticket_number,
+			game_no,
+			seat_no
+		) values(
+			#{memberId},
+			s_ticket_number.nextval,
+			#{gameNo},
+			#{seatNo}
+		)
+	</insert>
+	
+	<select id="selectGameReservationInfo" parameterType="String" resultMap="gameReservationMap">
+      select gr.member_id, 
+      		 gs.game_date, 
+      		 h.team_name as "homeTeam", 
+      		 a.team_name as "awayTeam",
+			 gr.seat_no
+  	    from tb_game_reservation gr, 
+  	    	 tb_home_team h, 
+  	    	 tb_away_team a, 
+  	    	 tb_game_schedule gs
+	   where gr.game_no = gs.game_no
+  	     and gs.HOME_TEAM_NO = h.home_team_no
+  	     and gs.away_team_no = a.away_team_no
+   		 and gr.member_id = #{memberId}
+   </select>
+	<select id="selectGameReservationByTicketNumber" parameterType="int" resultMap="gameReservationMap">
+      select gr.ticket_number as ticketNumber,
+      		 gs.game_date, 
+      		 h.team_name as "homeTeam", 
+      		 a.team_name as "awayTeam",
+			 gr.seat_no
+  	    from tb_game_reservation gr, 
+  	    	 tb_home_team h, 
+  	    	 tb_away_team a, 
+  	    	 tb_game_schedule gs
+	   where gr.game_no = gs.game_no
+  	     and gs.HOME_TEAM_NO = h.home_team_no
+  	     and gs.away_team_no = a.away_team_no
+   		 and gr.ticket_number = #{ticketNumber}
+   </select>
+   <select id = "selectTicketNumber" resultType = "int">
+   		select max(ticket_number) as ticketNumber
+  		  from tb_game_reservation
+   </select>
+   
+</mapper>	

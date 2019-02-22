@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mlec.dao.MemberMapper">
+
+   <!-- tb_member테이블의 데이터를 처리하기 위한 SQL -->
+   
+   <resultMap id="memberMap" type="member">
+      <result column="member_id" property="memberId"/>
+      <result column="password" property="password"/>
+      <result column="point" property="point"/>
+      <result column="is_del_account" property="isDelAccount"/>
+      <result column="delete_date" property="deleteDate"/>
+      <result column="member_no" property="memberNo"/>
+   </resultMap>
+      
+   <!-- 가입 : 회원가입 데이터 저장 -->
+   <insert id = "insertMemberInfo" parameterType="member">
+      insert into tb_member(member_id, password,member_no)
+      values(#{memberId}, #{password}, s_member_no.nextval)
+   </insert>
+   
+   <!-- 회원데이터 수정(비밀번호 변경) -->
+   <update id="updateMemberInfo" parameterType="member">
+      update tb_member
+         set password = #{password}
+       where member_id = #{memberId}
+   </update>
+   
+   <!-- 회원데이터 조회, 로그인/회원정보 수정시-->
+   <select id="selectMemberInfo" parameterType="String"
+           resultType="member">
+      select member_id as "memberId", password
+        from tb_member
+       where member_id = #{memberId}
+   </select>
+
+   <!-- 회원데이터 삭제 -->
+   <delete id="deleteMemberInfo" parameterType="String">
+      delete
+        from tb_member
+       where member_id = #{memberId}
+   </delete>
+   
+</mapper>

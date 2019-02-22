@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mlec.dao.HomeTeamMapper">	
+	<resultMap id="homeTeamMap" type="homeTeam">
+		<result column="home_team_no" property="homeTeamNo"/>
+		<result column="team_name" property="teamName"/>
+		<result column="team_no" property="teamNo"/>
+	</resultMap>
+</mapper>	
