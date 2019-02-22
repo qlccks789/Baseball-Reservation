@@ -4,7 +4,7 @@ Baseball Reservation System
 관련 기술
 -----------------
 
-- 와
+* 와
 - 우
 - 와
 - zz
