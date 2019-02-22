@@ -5,7 +5,7 @@ Baseball Reservation System
 -----------------
 - Java, mybatis, Oracle DB
 
-## 핵심 기능
+# 핵심 기능
 
 
 - 와
