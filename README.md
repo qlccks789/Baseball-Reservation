@@ -26,3 +26,5 @@ Baseball Reservation System
 - 예매 확인
 
 # 소감
+ - mybatis, oracle DB를 쓰면서 join, DML 등을 하면서 mybatis에 대한 성숙도를 높혔다.
+ - 네이밍 룰이 중요하다는 것을 느꼈다.
